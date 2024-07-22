@@ -19,11 +19,11 @@ jobs:
         run: echo "${{ env.DOCKER_PASSWORD }}" | docker login -u "${{ env.DOCKER_USERNAME }}" --password-stdin
         
       - name: Build Docker Image
-        run: docker build -t samruddhig/reactjs-app .
+        run: docker build -t samruddhig/cicd-app .
         
         
       - name: Publish Image to Docker Hub
-        run: docker push samruddhig/reactjs-app:latest
+        run: docker push samruddhig/cicd-app:latest
 
 
   deploy:
@@ -31,9 +31,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull Image from Docker Hub
-        run: docker pull samruddhig/reactjs-app:latest
+        run: docker pull samruddhig/cicd-app:latest
         
       - name: Delete Old Container
         run: docker rm -f reactContainer || true      
       - name: Run Docker Container
-        run: docker run -d -p 3000:80 --name reactContainer samruddhig/reactjs-app
+        run: docker run -d -p 3000:80 --name reactContainer samruddhig/cicd-app
